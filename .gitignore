@@ -10,3 +10,15 @@ request.http
 
 
 coverage
+
+     // lintfix ejecuta eslint con los cambios en el codigo, corrige errores 
+       // lint ejecuta eslint sin hacer cambios en el codigo
+
+en pinologgerwrapper.ts
+       //pino usa valores numericos para representar estos niveles: fatal: 60,
+//error: 50 ,warn: 40,info: 30,debug: 20,trace: 10 // 
+
+cuando se exporta default en el otro archivo no se importa con las llaves 
+
+se ejecuta el linit fix, cuando ya no hay errores de tipeo, se hacen los test, hay una libreria que se llama 
+ts-jest-codemods que analiza el codigo que tengo y genera test , se instala jscodeshift y --save-dev ts-jest-codemods

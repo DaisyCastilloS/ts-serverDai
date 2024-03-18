@@ -5,11 +5,13 @@ import { KoaServerWrapperInterface } from '../../3.1service/interface/KoaServerW
 import { PinoLoggerWrapperInterface } from '../../3.1service/interface/PinoLoggerWrapper';
 import routes from './routes/index.routes';
 
-export class KoaServer implements KoaServerWrapperInterface {
+export default class KoaServer implements KoaServerWrapperInterface {
   private app: Koa;
+
   private logger: PinoLoggerWrapperInterface;
 
   constructor(logger: PinoLoggerWrapperInterface) {
+    this.logger = logger; // Mover esta línea arriba
     this.app = new Koa();
     this.app.use(cors());
     this.app.use(bodyParser());
@@ -17,11 +19,8 @@ export class KoaServer implements KoaServerWrapperInterface {
       this.logger.info(`Method ${ctx.method}, to endpoint ${ctx.url}`);
       await next(); // Espera la ejecución del siguiente middleware
     });
-    
-    
     this.app.use(routes.routes());
     this.app.use(routes.allowedMethods());
-    this.logger = logger;
   }
 
   start(port: number): void {

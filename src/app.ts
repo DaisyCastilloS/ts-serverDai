@@ -1,7 +1,7 @@
-import { KoaServer } from "./4.1insfrastructure/koaServer/server";
-import PinoLogger from "./config/pinoLogger";
-require('dotenv').config();
+import KoaServer from './4.1insfrastructure/koaServer/server';
+import PinoLogger from './config/pinoLogger';
 
+require('dotenv').config();
 
 const logger = new PinoLogger();
 const server = new KoaServer(logger);

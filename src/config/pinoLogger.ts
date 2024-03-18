@@ -1,11 +1,11 @@
-import pino from 'pino';
+import pino, { Logger } from 'pino';
 import { PinoLoggerWrapperInterface } from '../3.1service/interface/PinoLoggerWrapper';
 
 export default class PinoLogger implements PinoLoggerWrapperInterface {
   private logger: pino.Logger;
 
-  constructor() {
-    this.logger = pino();
+  constructor(logger?: Logger) {
+    this.logger = logger || pino();
   }
 
   fatal(message: string): void {
@@ -30,5 +30,9 @@ export default class PinoLogger implements PinoLoggerWrapperInterface {
 
   trace(message: string): void {
     this.logger.trace(message);
+  }
+
+  getLoggerInstance(): pino.Logger {
+    return this.logger;
   }
 }
