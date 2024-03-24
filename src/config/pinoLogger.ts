@@ -1,14 +1,22 @@
-import pino, { Logger } from 'pino';
-import { PinoLoggerWrapperInterface } from '../3.1service/interface/PinoLoggerWrapper';
+import pino from 'pino';
+import { LoggerWrapperInterface } from '../3.1service/interface/LoggerWrapper';
 
-export default class PinoLogger implements PinoLoggerWrapperInterface {
+export default class PinoLogger implements LoggerWrapperInterface {
   private logger: pino.Logger;
 
-  constructor(logger?: Logger) {
+  constructor(logger?: pino.Logger) {
     this.logger = logger || pino();
   }
 
-  fatal(message: string): void {
+  emerg(message: string): void {
+    this.logger.fatal(message);
+  }
+
+  alert(message: string): void {
+    this.logger.fatal(message);
+  }
+
+  crit(message: string): void {
     this.logger.fatal(message);
   }
 
@@ -16,8 +24,12 @@ export default class PinoLogger implements PinoLoggerWrapperInterface {
     this.logger.error(message);
   }
 
-  warn(message: string): void {
+  warning(message: string): void {
     this.logger.warn(message);
+  }
+
+  notice(message: string): void {
+    this.logger.info(message);
   }
 
   info(message: string): void {
@@ -26,13 +38,5 @@ export default class PinoLogger implements PinoLoggerWrapperInterface {
 
   debug(message: string): void {
     this.logger.debug(message);
-  }
-
-  trace(message: string): void {
-    this.logger.trace(message);
-  }
-
-  getLoggerInstance(): pino.Logger {
-    return this.logger;
   }
 }

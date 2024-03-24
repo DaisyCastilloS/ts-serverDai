@@ -1,7 +1,6 @@
 import PinoLogger from '../src/config/pinoLogger';
-import pino,{ Logger } from 'pino';
+import pino from 'pino';
 
-// Mock pino module
 jest.mock('pino', () => {
   return jest.fn(() => ({
     fatal: jest.fn(),
@@ -9,16 +8,15 @@ jest.mock('pino', () => {
     warn: jest.fn(),
     info: jest.fn(),
     debug: jest.fn(),
-    trace: jest.fn(),
   }));
 });
 
 describe('PinoLogger', () => {
   let logger: PinoLogger;
-  let mockPinoLogger: Logger;
+  let mockPinoLogger: pino.Logger;
 
   beforeEach(() => {
-    mockPinoLogger = pino() as Logger;
+    mockPinoLogger = pino() as pino.Logger;
     logger = new PinoLogger(mockPinoLogger);
   });
 
@@ -26,18 +24,51 @@ describe('PinoLogger', () => {
     jest.clearAllMocks();
   });
 
-  it('should log fatal message', () => {
-    const message = 'Fatal error occurred';
-    logger.fatal(message);
-    // Verificar si el método fatal del mock de pino fue llamado con el mensaje correcto
+  it('should log emerg message as fatal', () => {
+    const message = 'Emergency message';
+    logger.emerg(message);
     expect(mockPinoLogger.fatal).toHaveBeenCalledWith(message);
   });
 
-  // Similar tests for other log levels
+  it('should log alert message as fatal', () => {
+    const message = 'Alert message';
+    logger.alert(message);
+    expect(mockPinoLogger.fatal).toHaveBeenCalledWith(message);
+  });
 
-  it('should expose the logger', () => {
-    const loggerInstance = logger.getLoggerInstance();
-    expect(loggerInstance).toBeDefined();
-    // Test any custom methods or properties exposed by getLoggerInstance()
+  it('should log crit message as fatal', () => {
+    const message = 'Critical message';
+    logger.crit(message);
+    expect(mockPinoLogger.fatal).toHaveBeenCalledWith(message);
+  });
+
+  it('should log error message', () => {
+    const message = 'Error message';
+    logger.error(message);
+    expect(mockPinoLogger.error).toHaveBeenCalledWith(message);
+  });
+
+  it('should log warning message', () => {
+    const message = 'Warning message';
+    logger.warning(message);
+    expect(mockPinoLogger.warn).toHaveBeenCalledWith(message);
+  });
+
+  it('should log notice message as info', () => {
+    const message = 'Notice message';
+    logger.notice(message);
+    expect(mockPinoLogger.info).toHaveBeenCalledWith(message);
+  });
+
+  it('should log info message', () => {
+    const message = 'Info message';
+    logger.info(message);
+    expect(mockPinoLogger.info).toHaveBeenCalledWith(message);
+  });
+
+  it('should log debug message', () => {
+    const message = 'Debug message';
+    logger.debug(message);
+    expect(mockPinoLogger.debug).toHaveBeenCalledWith(message);
   });
 });

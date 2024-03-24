@@ -2,16 +2,16 @@ import Koa, { Context, Next } from 'koa';
 import cors from 'koa-cors';
 import bodyParser from 'koa-bodyparser';
 import { KoaServerWrapperInterface } from '../../3.1service/interface/KoaServerWrapper';
-import { PinoLoggerWrapperInterface } from '../../3.1service/interface/PinoLoggerWrapper';
+import { LoggerWrapperInterface } from '../../3.1service/interface/LoggerWrapper';
 import routes from './routes/index.routes';
 
 export default class KoaServer implements KoaServerWrapperInterface {
   private app: Koa;
 
-  private logger: PinoLoggerWrapperInterface;
+  private logger: LoggerWrapperInterface;
 
-  constructor(logger: PinoLoggerWrapperInterface) {
-    this.logger = logger; // Mover esta línea arriba
+  constructor(logger: LoggerWrapperInterface) {
+    this.logger = logger;
     this.app = new Koa();
     this.app.use(cors());
     this.app.use(bodyParser());
